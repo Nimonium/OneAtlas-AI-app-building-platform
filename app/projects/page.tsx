@@ -3,9 +3,11 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useGenerationStore } from "@/lib/store";
 
 export default function ProjectsPage() {
   const pathname = usePathname();
+  const projects = useGenerationStore((state) => state.projects);
 
   const getLinkClasses = (href: string) => {
     const isActive = pathname === href || (href !== "/build" && pathname.startsWith(href));
@@ -45,30 +47,44 @@ export default function ProjectsPage() {
           </Link>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[1,2,3].map((i) => (
-            <div key={i} className="bg-white border border-border-subtle rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
-              <div className="flex justify-between items-start mb-4">
-                <div className="w-12 h-12 rounded-xl bg-surface-container-low text-primary flex items-center justify-center">
-                  <span className="material-symbols-outlined">folder</span>
-                </div>
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium bg-surface-container-low text-on-surface-variant">
-                  Updated 2h ago
-                </span>
-              </div>
-              <h3 className="font-headline-sm text-lg mb-1">Internal Tooling {i}</h3>
-              <p className="text-body-sm text-on-surface-variant mb-6">CRM, Admin Panel, and Inventory systems.</p>
-              
-              <div className="flex justify-between items-center border-t border-border-subtle pt-4">
-                <div className="flex -space-x-2">
-                  <div className="w-8 h-8 rounded-full bg-primary-fixed border-2 border-white flex justify-center items-center text-xs font-bold text-primary">JD</div>
-                  <div className="w-8 h-8 rounded-full bg-accent-teal/20 border-2 border-white flex justify-center items-center text-xs font-bold text-accent-teal">AL</div>
-                </div>
-                <button className="text-primary text-sm font-medium hover:underline">View Project</button>
-              </div>
+        {projects.length === 0 ? (
+          <div className="bg-white border border-border-subtle rounded-2xl p-12 text-center shadow-sm">
+            <div className="w-16 h-16 rounded-full bg-surface-container-low text-on-surface-variant flex items-center justify-center mx-auto mb-4">
+              <span className="material-symbols-outlined text-[32px]">folder_off</span>
             </div>
-          ))}
-        </div>
+            <h3 className="font-headline-sm text-lg mb-2">No projects yet</h3>
+            <p className="text-on-surface-variant mb-6 max-w-sm mx-auto">You haven't generated any applications yet. Head over to the Builder to create your first app.</p>
+            <Link href="/build" className="bg-primary text-on-primary px-6 py-2.5 rounded-lg font-medium hover:opacity-90 transition-opacity inline-flex items-center gap-2">
+              <span className="material-symbols-outlined text-[20px]">add</span> Create App
+            </Link>
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {projects.map((project, i) => (
+              <div key={project.appId} className="bg-white border border-border-subtle rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                <div className="flex justify-between items-start mb-4">
+                  <div className="w-12 h-12 rounded-xl bg-surface-container-low text-primary flex items-center justify-center">
+                    <span className="material-symbols-outlined">folder</span>
+                  </div>
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium bg-surface-container-low text-on-surface-variant">
+                    Just now
+                  </span>
+                </div>
+                <h3 className="font-headline-sm text-lg mb-1">{project.generatedName || project.appName}</h3>
+                <p className="text-body-sm text-on-surface-variant mb-6 line-clamp-2">
+                  Generated from {project.templateSlug} template.
+                </p>
+                
+                <div className="flex justify-between items-center border-t border-border-subtle pt-4">
+                  <div className="flex -space-x-2">
+                    <div className="w-8 h-8 rounded-full bg-primary-fixed border-2 border-white flex justify-center items-center text-xs font-bold text-primary">JD</div>
+                  </div>
+                  <button className="text-primary text-sm font-medium hover:underline">View Project</button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </main>
     </div>
   );

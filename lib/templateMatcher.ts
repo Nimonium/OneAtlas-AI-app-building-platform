@@ -29,7 +29,7 @@ export function matchTemplate(prompt: string): MatchResult | null {
       confidence += 0.1;
     }
     
-    if (confidence >= 0.15) {
+    if (confidence >= 0.05) {
       if (!bestMatch || confidence > bestMatch.confidence) {
         bestMatch = {
           template,
