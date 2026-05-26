@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -7,8 +7,13 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-mono",
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
-  title: "OneAtlas — AI-Native App Builder",
+  title: "OneAtlas | Build Internal Apps with AI",
   description: "Generate and deploy internal business applications with AI.",
 };
 
@@ -18,20 +23,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <body
-        className={`${inter.variable} font-sans antialiased bg-background text-foreground min-h-screen`}
+        className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased bg-background text-on-surface min-h-screen`}
       >
-        <header className="fixed top-0 w-full z-50 nav-blur border-b border-border-light">
-          <div className="container mx-auto px-4 h-16 flex items-center">
-            <span className="text-xl font-bold tracking-tight text-brand-gradient">
-              OneAtlas
-            </span>
-          </div>
-        </header>
-        <main className="pt-16 min-h-screen">
-          {children}
-        </main>
+        {children}
       </body>
     </html>
   );
