@@ -51,7 +51,7 @@ export default function NotificationsPage() {
             { title: "Billing Update", desc: "Your invoice for May is now available.", time: "3 days ago", icon: "receipt_long", color: "text-on-surface-variant" }
           ].map((notif, i) => (
             <div key={i} className={`p-6 flex gap-4 hover:bg-surface-alt/50 transition-colors ${i < 2 ? 'bg-surface-alt/20' : ''}`}>
-              <div className={`w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center flex-shrink-0 ${notif.color}`}>
+              <div className={`w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center flex-shrink-0 overflow-hidden ${notif.color}`}>
                 <span className="material-symbols-outlined">{notif.icon}</span>
               </div>
               <div className="flex-1">

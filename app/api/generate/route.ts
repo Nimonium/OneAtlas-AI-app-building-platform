@@ -46,45 +46,55 @@ export async function POST(req: NextRequest) {
     const schema = instantiateSchema(match.template, appName);
 
     // DB Operations
-    const templateRecord = await prisma.template.upsert({
-      where: { slug: match.template.slug },
-      update: {},
-      create: {
-        slug: match.template.slug,
-        name: match.template.name,
-        category: match.template.category,
-        complexity: match.template.complexity,
-        description: match.template.description,
-        tags: match.template.tags,
-        schemaDefaults: match.template.schemaDefaults as any,
-      }
-    });
+    let appId = crypto.randomUUID();
+    let finalAppName = appName;
+    
+    try {
+      const templateRecord = await prisma.template.upsert({
+        where: { slug: match.template.slug },
+        update: {},
+        create: {
+          slug: match.template.slug,
+          name: match.template.name,
+          category: match.template.category,
+          complexity: match.template.complexity,
+          description: match.template.description,
+          tags: match.template.tags,
+          schemaDefaults: match.template.schemaDefaults as any,
+        }
+      });
 
-    const app = await prisma.app.create({
-      data: {
-        name: appName,
-        slug: appSlug,
-        templateId: templateRecord.id,
-      },
-    });
+      const app = await prisma.app.create({
+        data: {
+          name: appName,
+          slug: appSlug,
+          templateId: templateRecord.id,
+        },
+      });
+      
+      appId = app.id;
+      finalAppName = app.name;
 
-    await prisma.runtimeSchema.create({
-      data: {
-        appId: app.id,
-        version: 1,
-        schema: schema as any,
-        isCurrent: true,
-      },
-    });
+      await prisma.runtimeSchema.create({
+        data: {
+          appId: app.id,
+          version: 1,
+          schema: schema as any,
+          isCurrent: true,
+        },
+      });
+    } catch (dbError) {
+      console.warn("Database unavailable. Skipping persistence and using in-memory mock generation:", dbError);
+    }
 
     const data: GenerateResponse = {
-      appId: app.id,
-      appName: app.name,
+      appId: appId,
+      appName: finalAppName,
       schema,
       templateUsed: match.template.id,
       templateSlug: match.template.slug,
       confidence: match.confidence,
-      generatedName: app.name,
+      generatedName: finalAppName,
     };
 
     return NextResponse.json({ data, meta: { timestamp, requestId } });

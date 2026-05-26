@@ -40,9 +40,9 @@ export default function ProjectsPage() {
             <h1 className="font-display-sm text-display-md mb-2">Projects</h1>
             <p className="text-on-surface-variant">Manage your AI-generated applications and workspaces.</p>
           </div>
-          <button className="bg-primary text-on-primary px-4 py-2 rounded-lg font-medium hover:opacity-90 shadow-sm flex items-center gap-2">
+          <Link href="/build" className="bg-primary text-on-primary px-4 py-2 rounded-lg font-medium hover:opacity-90 shadow-sm flex items-center gap-2">
             <span className="material-symbols-outlined text-[18px]">add</span> New Project
-          </button>
+          </Link>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
