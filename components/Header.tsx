@@ -2,29 +2,39 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 export function Header() {
   const pathname = usePathname();
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const getLinkClasses = (href: string) => {
-    // Exact match for home, startsWith for other routes
     const isActive = href === "/" ? pathname === "/" : pathname.startsWith(href);
-    
-    if (isActive) {
-      return "font-body-md text-body-md text-primary font-semibold border-b-2 border-primary hover:text-primary transition-colors duration-200 py-6";
-    }
-    return "font-body-md text-body-md text-on-surface-variant font-medium border-b-2 border-transparent hover:text-primary transition-colors duration-200 py-6";
+    return `text-[15px] font-medium transition-colors duration-200 ${
+      isActive ? "text-[#111111]" : "text-[#4B5563] hover:text-[#111111]"
+    }`;
   };
 
   return (
-    <header className="docked full-width top-0 sticky z-50 bg-surface/70 backdrop-blur-xl border-b border-border-subtle/50 shadow-sm">
-      <div className="flex justify-between items-center w-full px-margin-desktop max-w-container-max mx-auto h-20">
-        <div className="flex items-center gap-8 h-full">
-          <Link href="/" className="font-headline-md text-headline-md font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary via-accent-purple to-accent-teal">
+    <header 
+      className={`sticky top-0 z-50 w-full transition-all duration-300 h-[72px] ${
+        scrolled ? "bg-white/80 backdrop-blur-md border-b border-[#E5E7EB]" : "bg-transparent border-b border-transparent"
+      }`}
+    >
+      <div className="flex justify-between items-center w-full px-8 md:px-[32px] max-w-[1280px] mx-auto h-full">
+        <div className="flex items-center gap-[32px] h-full">
+          <Link href="/" className="text-[22px] font-bold text-[#111111]">
             OneAtlas
           </Link>
-          <nav className="hidden md:flex items-center gap-6 h-full mt-2">
+          <nav className="hidden md:flex items-center gap-[32px] h-full">
             <Link className={getLinkClasses("/")} href="/">Product</Link>
             <Link className={getLinkClasses("/templates")} href="/templates">Templates</Link>
             <Link className={getLinkClasses("/enterprise")} href="/enterprise">Enterprise</Link>
@@ -34,7 +44,7 @@ export function Header() {
         </div>
         <div className="flex items-center gap-4">
           <Link href="/build">
-            <button className="hero-shine text-on-primary px-6 py-2.5 rounded-xl font-body-md font-semibold shadow-lg shadow-primary/20 active:opacity-80 active:scale-95 transition-all">
+            <button className="btn-primary">
               Start Building
             </button>
           </Link>
