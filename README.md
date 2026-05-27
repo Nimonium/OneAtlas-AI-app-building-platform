@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
+  <h1 align="center">OneAtlas</h1>
+  <p align="center">
+    <strong>A serious AI operating system for building software.</strong>
+  </p>
+</div>
 
-## Getting Started
+<br />
 
-First, run the development server:
+OneAtlas is an AI-native platform that transforms plain English business workflows into production-ready internal tools, schemas, and dashboards instantly. Built for the future of intelligence, we replace drag-and-drop fatigue with conversational editing.
+
+---
+
+## ⚡ Features
+
+- **Conversational Editing**: Change layouts, add buttons, or connect new APIs just by talking to the interface.
+- **Auto Schema Generation**: Upload a CSV or describe a process, and OneAtlas builds a perfectly normalized database schema automatically.
+- **AI-Native Runtime**: Instead of static logic, our runtime uses LLMs (GPT-4, Claude 3.5, Gemini Pro) to interpret business rules and adapt workflows on the fly.
+- **Enterprise Grade**: Designed for scale with SSO, RBAC, and dedicated VPC deployments.
+
+## 🚀 Getting Started
+
+First, install dependencies and run the development server:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the workspace.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠 Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Framework**: [Next.js 14+](https://nextjs.org) (App Router)
+- **Styling**: Tailwind CSS v4 
+- **Components**: [shadcn/ui](https://ui.shadcn.com/)
+- **Database ORM**: Prisma
+- **State Management**: Zustand
 
-## Learn More
+## 🎨 Design System
 
-To learn more about Next.js, take a look at the following resources:
+Our frontend follows a strictly minimal, typography-first aesthetic drawing inspiration from Y Combinator, Linear, and Stripe. We focus on clean hierarchies, large whitespace, and a flat design.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Typography**: Inter (Clean, readable, modern)
+- **Palette**: Premium off-white (`#F5F5EE`) with deep contrast (`#111111`) and subtle orange accents (`#FF6600`).
+- **Motion**: Subtle fade-ups and minimal layout shifts.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📄 License
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+© 2026 OneAtlas AI. All rights reserved.
