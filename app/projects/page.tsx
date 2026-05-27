@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useGenerationStore } from "@/lib/store";
@@ -8,6 +8,11 @@ import { useGenerationStore } from "@/lib/store";
 export default function ProjectsPage() {
   const pathname = usePathname();
   const projects = useGenerationStore((state) => state.projects);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const getLinkClasses = (href: string) => {
     const isActive = pathname === href || (href !== "/build" && pathname.startsWith(href));
@@ -47,13 +52,13 @@ export default function ProjectsPage() {
           </Link>
         </div>
 
-        {projects.length === 0 ? (
+        {projects.length === 0 || !isMounted ? (
           <div className="bg-white border border-border-subtle rounded-2xl p-12 text-center shadow-sm">
             <div className="w-16 h-16 rounded-full bg-surface-container-low text-on-surface-variant flex items-center justify-center mx-auto mb-4">
               <span className="material-symbols-outlined text-[32px]">folder_off</span>
             </div>
             <h3 className="font-headline-sm text-lg mb-2">No projects yet</h3>
-            <p className="text-on-surface-variant mb-6 max-w-sm mx-auto">You haven't generated any applications yet. Head over to the Builder to create your first app.</p>
+            <p className="text-on-surface-variant mb-6 max-w-sm mx-auto">You haven&apos;t generated any applications yet. Head over to the Builder to create your first app.</p>
             <Link href="/build" className="bg-primary text-on-primary px-6 py-2.5 rounded-lg font-medium hover:opacity-90 transition-opacity inline-flex items-center gap-2">
               <span className="material-symbols-outlined text-[20px]">add</span> Create App
             </Link>
